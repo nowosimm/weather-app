@@ -35,7 +35,7 @@ body {
 .currentInformation {
     display: flex;
     justify-content: space-between;
-    margin: 30px 30px;
+    margin: 30px 40px 30px 20px;
 }
 
 .currentInformation__left {
@@ -119,4 +119,8 @@ body {
 
 .weatherSeparator {
     padding: 0 4px 0 2px;
+}
+
+.weekDayText {
+    padding-top: 5px;
 }

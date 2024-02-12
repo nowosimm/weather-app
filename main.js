@@ -13,6 +13,7 @@ function makeWeekViewWeather(myData) {
 	
 		var weekDayText = document.createElement('p');
 		weekDayText.textContent = dayjs(forecastData.date).format('dddd');
+		weekDayText.classList.add('weekDayText');
 	
 		var weatherIcon = document.createElement('img');
 		weatherIcon.src = forecastData.day.condition.icon;
