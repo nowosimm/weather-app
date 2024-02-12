@@ -116,3 +116,7 @@ body {
     height: auto;
     padding: 30px;
 }
+
+.weatherSeparator {
+    padding: 0 3px;
+}

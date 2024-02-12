@@ -1,10 +1,12 @@
 import './style.css'
-import sunnyIcon from "./images/sunnyIcon.png"
+import dayjs from 'dayjs';
 
-function makeWeekViewWeather() {
+function makeWeekViewWeather(myData) {
 	var dayContainers = document.querySelectorAll('.weekView__weather')
-	for(var i = 0; i < dayContainers.length; i++) {
+	for(var i = 0; i < myData.sevenDayForecast.length; i++) {
 		var dayContainer = dayContainers[i];
+		var forecastData = myData.sevenDayForecast[i];
+		console.log(forecastData);
 
 		var weekViewContainer = document.createElement('div')
 		weekViewContainer.classList.add('weekView__container')
@@ -13,20 +15,22 @@ function makeWeekViewWeather() {
 		weekDayText.textContent = 'Monday';
 	
 		var weatherIcon = document.createElement('img');
-		weatherIcon.src = sunnyIcon;
+		weatherIcon.src = forecastData.day.condition.icon;
 		weatherIcon.classList.add('weather__icon')
 	
 		var temperatureContainer = document.createElement('div');
 		temperatureContainer.classList.add('temperature__container')
 	
 		var weatherHigh = document.createElement('p');
-		weatherHigh.textContent = '47'
+		weatherHigh.textContent = Math.round(forecastData.day.maxtemp_f);
 	
 		var weatherSeparator = document.createElement('p');
-		weatherSeparator.textContent= ' / '
+		weatherSeparator.textContent= '/'
+		weatherSeparator.classList.add('weatherSeparator');
+
 	
 		var weatherLow = document.createElement('p');
-		weatherLow.textContent = '28'
+		weatherLow.textContent = Math.round(forecastData.day.mintemp_f) + '°';
 	
 		weekViewContainer.appendChild(weekDayText);
 		weekViewContainer.appendChild(weatherIcon);
@@ -34,12 +38,10 @@ function makeWeekViewWeather() {
 		temperatureContainer.appendChild(weatherHigh);
 		temperatureContainer.appendChild(weatherSeparator);
 		temperatureContainer.appendChild(weatherLow);
-
-		dayContainer.appendChild(weekViewContainer);
+		
+		dayContainer.replaceChildren(weekViewContainer);
 	}
 }
-
-makeWeekViewWeather();
 
 // grabs data from api
 async function getWeatherData(location) {
@@ -57,27 +59,28 @@ async function getLocationFromInput () {
 	const input = document.querySelector('.searchbar__input');
 	const cityName = input.value;
 	const weatherData = await getWeatherData(cityName);
-	console.log(weatherData)
-	console.log(weatherData.location.name +", "+ weatherData.location.region);
 	myData(weatherData);
 };
+
+
 
 function myData(data) {
 	const myData = {
 		// current data
 		currentTemp:  Math.round(data.current.temp_f),
 		currentIcon: data.current.condition.icon,
-		sevenDayForecast: data.forecast.forecastday,
 		// location data
 		currentCity: data.location.name,
 		currentRegion: data.location.region,
 		currentCountry: data.location.country,
+		currentTime: data.location.localtime,
 		// forecast data
-		
+		sevenDayForecast: data.forecast.forecastday,
 	}
 	displayData(myData);
 	displayLocation(myData);
-
+	displayTime(myData);
+	makeWeekViewWeather(myData);
 }
 
 function displayData(myData) {
@@ -88,6 +91,16 @@ function displayData(myData) {
 	var icon = document.createElement('img');
 	icon.src =myData.currentIcon;
 	currentIconDiv.replaceChildren(icon);
+}
+
+function displayTime(myData) {
+	var currentDate = dayjs(myData.currentTime).format('MM-DD-YY');
+	var currentDateDiv = document.querySelector('.currentInformation__date');
+	currentDateDiv.replaceChildren(currentDate);
+
+	var currentTime = dayjs(myData.currentTime).format('h:mm A');
+	var currentTimeDiv = document.querySelector('.currentInformation__time');
+	currentTimeDiv.replaceChildren(currentTime);
 }
 
 function displayLocation(myData) {
@@ -105,7 +118,12 @@ input.addEventListener("keypress", function(event) {
 	if (event.key === "Enter") {
 		console.log(input.value);
 		getLocationFromInput()
-	}
+	} 
 });
 
+async function defaultPageLoad () {
+	const weatherData = await getWeatherData("Cincinnati, Ohio");
+	myData(weatherData);
+};
+defaultPageLoad();
 
