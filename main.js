@@ -47,7 +47,7 @@ function makeWeekViewWeather(myData) {
 // grabs data from api
 async function getWeatherData(location) {
 	const response = await fetch(
-	  `http://api.weatherapi.com/v1/forecast.json?key=d629dac309b84a568f5152706240702&q=${location}&days=7`,
+	  `https://api.weatherapi.com/v1/forecast.json?key=d629dac309b84a568f5152706240702&q=${location}&days=7`,
 	  {
 		mode: 'cors',
 	  }
