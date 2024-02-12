@@ -12,7 +12,7 @@ function makeWeekViewWeather(myData) {
 		weekViewContainer.classList.add('weekView__container')
 	
 		var weekDayText = document.createElement('p');
-		weekDayText.textContent = 'Monday';
+		weekDayText.textContent = dayjs(forecastData.date).format('dddd');
 	
 		var weatherIcon = document.createElement('img');
 		weatherIcon.src = forecastData.day.condition.icon;
@@ -22,7 +22,7 @@ function makeWeekViewWeather(myData) {
 		temperatureContainer.classList.add('temperature__container')
 	
 		var weatherHigh = document.createElement('p');
-		weatherHigh.textContent = Math.round(forecastData.day.maxtemp_f);
+		weatherHigh.textContent = Math.round(forecastData.day.maxtemp_f) + '°';
 	
 		var weatherSeparator = document.createElement('p');
 		weatherSeparator.textContent= '/'
@@ -61,8 +61,6 @@ async function getLocationFromInput () {
 	const weatherData = await getWeatherData(cityName);
 	myData(weatherData);
 };
-
-
 
 function myData(data) {
 	const myData = {
@@ -110,7 +108,6 @@ function displayLocation(myData) {
 	} else {
 		locationDiv.textContent = myData.currentCity + ', ' + myData.currentCountry;
 	}
-
 }
 
 const input = document.querySelector('.searchbar__input');
@@ -118,6 +115,7 @@ input.addEventListener("keypress", function(event) {
 	if (event.key === "Enter") {
 		console.log(input.value);
 		getLocationFromInput()
+		input.value = "";
 	} 
 });
 
@@ -125,5 +123,6 @@ async function defaultPageLoad () {
 	const weatherData = await getWeatherData("Cincinnati, Ohio");
 	myData(weatherData);
 };
+
 defaultPageLoad();
 
