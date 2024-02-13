@@ -61,7 +61,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 135px;
+    margin: 160px;
 }
 
 .searchbar__input {
@@ -82,7 +82,7 @@ body {
 .weekView {
     display: flex;
     justify-content: center;
-    padding: 50px 10px 10px 10px;
+    margin: 50px 10px 10px 10px;
 }
 .weekView__weather {
     height: 300px;
@@ -123,4 +123,64 @@ body {
 
 .weekDayText {
     padding-top: 5px;
+}
+
+/* mobile */
+
+@media (max-width: 600px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 30px;
+    }
+
+    .header__text {
+        font-size: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header__right {
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .currentInformation__left {
+        font-size: 20px;
+    }
+
+    .currentInformation__right {
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .currentInformation__date, .currentInformation__time {
+        margin: 5px;
+    }
+
+    .searchbar__container {
+        margin: 60px;
+    }
+
+    .searchbar__input {
+        height: 24px;
+    }
+
+    .weekView { 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .weekView__weather {
+        width: 80%;
+    }
 }

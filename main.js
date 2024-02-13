@@ -120,6 +120,13 @@ input.addEventListener("keypress", function(event) {
 	} 
 });
 
+const searchButton = document.querySelector('.searchbar__icon');
+searchButton.addEventListener("click", function() {
+		getLocationFromInput()
+		input.value = "";
+	} 
+);
+
 async function defaultPageLoad () {
 	const weatherData = await getWeatherData("Cincinnati, Ohio");
 	myData(weatherData);
